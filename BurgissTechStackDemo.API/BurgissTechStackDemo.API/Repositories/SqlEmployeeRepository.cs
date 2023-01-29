@@ -70,5 +70,19 @@ namespace BurgissTechStackDemo.API.Repositories
             await context.SaveChangesAsync();
             return employee.Entity;
         }
+
+        public async Task<bool> UpdateProfileImage(Guid employeeId, string profileImageUrl)
+        {
+            var employee = await GetEmployeeAsync(employeeId);
+
+            if (employee != null)
+            {
+                employee.ProfileImageUrl = profileImageUrl;
+                await context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
     }
 }

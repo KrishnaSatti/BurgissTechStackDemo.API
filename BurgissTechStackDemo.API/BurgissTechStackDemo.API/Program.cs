@@ -3,6 +3,7 @@ using BurgissTechStackDemo.API.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddCors((options) =>
 builder.Services.AddControllers();
 builder.Services.AddDbContext<EmployeeAdminContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeAdminPortalDb")));
 builder.Services.AddScoped<IEmployeeRepository, SqlEmployeeRepository>();
+builder.Services.AddScoped<IImageRepository, LocalStorageImageRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,6 +43,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Resources")),
+    RequestPath = "/Resources"
+});
+
 
 app.UseCors("angularApplication");
 

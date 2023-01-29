@@ -12,5 +12,6 @@ namespace BurgissTechStackDemo.API.Repositories
         Task<Employee> UpdateEmployee(Guid employeeId, Employee request);
         Task<Employee> DeleteStudent(Guid employeeId);
         Task <Employee> AddEmployee(Employee request);
+        Task<bool> UpdateProfileImage(Guid studentId, string profileImageUrl);
     }
 }
