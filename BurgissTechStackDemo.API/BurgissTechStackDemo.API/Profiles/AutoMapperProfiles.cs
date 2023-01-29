@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BurgissTechStackDemo.API.DomainModels;
+using BurgissTechStackDemo.API.Profiles.AfterMaps;
 using DataModels = BurgissTechStackDemo.API.DataModels;
 
 namespace BurgissTechStackDemo.API.Profiles
@@ -16,6 +17,10 @@ namespace BurgissTechStackDemo.API.Profiles
 
             CreateMap<DataModels.Address, Address>()
                 .ReverseMap();
+
+            CreateMap<UpdateEmployeeRequest, DataModels.Employee>().AfterMap<UpdateEmployeeRequestAfterMap>();
+
+            CreateMap<AddEmployeeRequest, DataModels.Employee>().AfterMap<AddEmployeeRequestAfterMap>();
         }
     }
 }
