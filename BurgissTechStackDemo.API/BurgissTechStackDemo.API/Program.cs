@@ -1,5 +1,6 @@
 using BurgissTechStackDemo.API.DataModels;
 using BurgissTechStackDemo.API.Repositories;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,16 @@ builder.Services.AddCors((options) =>
     });
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+                .AddFluentValidation(options =>
+                {
+                    // Validate child properties and root collection elements
+                    options.ImplicitlyValidateChildProperties = true;
+                    options.ImplicitlyValidateRootCollectionElements = true;
+
+                    // Automatic registration of validators in assembly
+                    options.RegisterValidatorsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+                });
 builder.Services.AddDbContext<EmployeeAdminContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeAdminPortalDb")));
 builder.Services.AddScoped<IEmployeeRepository, SqlEmployeeRepository>();
 builder.Services.AddScoped<IImageRepository, LocalStorageImageRepository>();
