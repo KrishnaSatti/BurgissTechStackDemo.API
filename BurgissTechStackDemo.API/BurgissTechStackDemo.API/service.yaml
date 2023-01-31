@@ -1,0 +1,15 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+ labels:
+  app: BurgissTechStackDemo.API
+ name: BurgissTechStackDemo.API-loadbalancer
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: BurgissTechStackDemo.API
+    component: netcore-app
+  type: LoadBalancer

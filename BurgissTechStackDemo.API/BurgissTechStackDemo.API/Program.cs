@@ -9,14 +9,12 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
-
 // Add services to the container.
 builder.Services.AddCors((options) =>
 {
     options.AddPolicy("angularApplication", (builder) =>
     {
-        builder.WithOrigins("http://localhost:4200")
+        builder.WithOrigins("http://20.62.183.246:8080")
         .AllowAnyHeader()
         .WithMethods("GET", "POST", "PUT", "DELETE")
         .WithExposedHeaders("*");
@@ -53,13 +51,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseStaticFiles(new StaticFileOptions
+/*app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Resources")),
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
     RequestPath = "/Resources"
 });
-
+*/
 
 app.UseCors("angularApplication");
 

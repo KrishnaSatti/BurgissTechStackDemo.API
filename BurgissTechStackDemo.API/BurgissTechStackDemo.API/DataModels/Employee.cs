@@ -11,9 +11,13 @@
         public string? ProfileImageUrl { get; set; }
         public Guid GenderId { get; set; }
 
+        public Guid DepartmentId { get; set; }
+
+
         //Navigation Properties
 
         public Gender Gender { get; set; }
+        public Department Department { get; set; }
         public Address Address { get; set; } 
 
 

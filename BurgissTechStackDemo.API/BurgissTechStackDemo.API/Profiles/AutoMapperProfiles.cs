@@ -18,6 +18,9 @@ namespace BurgissTechStackDemo.API.Profiles
             CreateMap<DataModels.Address, Address>()
                 .ReverseMap();
 
+            CreateMap<DataModels.Department, Department>()
+                .ReverseMap();
+
             CreateMap<UpdateEmployeeRequest, DataModels.Employee>().AfterMap<UpdateEmployeeRequestAfterMap>();
 
             CreateMap<AddEmployeeRequest, DataModels.Employee>().AfterMap<AddEmployeeRequestAfterMap>();

@@ -4,6 +4,7 @@ using BurgissTechStackDemo.API.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgissTechStackDemo.API.Migrations
 {
     [DbContext(typeof(EmployeeAdminContext))]
-    partial class EmployeeAdminContextModelSnapshot : ModelSnapshot
+    [Migration("20230130171654_mssql.azure_migration_391")]
+    partial class mssqlazuremigration391
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,21 +48,6 @@ namespace BurgissTechStackDemo.API.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("BurgissTechStackDemo.API.DataModels.Department", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Department");
-                });
-
             modelBuilder.Entity("BurgissTechStackDemo.API.DataModels.Employee", b =>
                 {
                     b.Property<Guid>("Id")
@@ -68,9 +56,6 @@ namespace BurgissTechStackDemo.API.Migrations
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -94,8 +79,6 @@ namespace BurgissTechStackDemo.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("GenderId");
 
@@ -128,19 +111,11 @@ namespace BurgissTechStackDemo.API.Migrations
 
             modelBuilder.Entity("BurgissTechStackDemo.API.DataModels.Employee", b =>
                 {
-                    b.HasOne("BurgissTechStackDemo.API.DataModels.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BurgissTechStackDemo.API.DataModels.Gender", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Department");
 
                     b.Navigation("Gender");
                 });

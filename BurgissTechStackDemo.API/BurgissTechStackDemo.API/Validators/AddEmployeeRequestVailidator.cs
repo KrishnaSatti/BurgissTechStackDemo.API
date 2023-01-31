@@ -12,7 +12,7 @@ namespace BurgissTechStackDemo.API.Validators
             RuleFor(x => x.LastName).NotEmpty();
             RuleFor(x => x.DateOfBirth).NotEmpty();
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
-            RuleFor(x => x.Mobile).GreaterThan(99999).LessThan(10000000000);
+            RuleFor(x => x.Mobile).GreaterThan(0);
             RuleFor(x => x.GenderId).NotEmpty().Must(id =>
             {
                 var gender = employeeRepository.GetGendersAsync().Result.ToList()
@@ -25,8 +25,19 @@ namespace BurgissTechStackDemo.API.Validators
 
                 return false;
             }).WithMessage("Please select a valid Gender");
+            RuleFor(x => x.DepartmentId).NotEmpty().Must(id =>
+            {
+                var department = employeeRepository.GetDepartmentAsync().Result.ToList()
+                .FirstOrDefault(x => x.Id == id);
+
+                if (department != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }).WithMessage("Please select a valid department");
             RuleFor(x => x.PhysicalAddress).NotEmpty();
-            RuleFor(x => x.PostalAddress).NotEmpty();
         }
     }
 }

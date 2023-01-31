@@ -17,12 +17,12 @@ namespace BurgissTechStackDemo.API.Repositories
 
         public async Task<Employee> GetEmployeeAsync(Guid employeeId)
         {
-            return await context.Employee.Include(nameof(Gender)).Include(nameof(Address)).FirstOrDefaultAsync(x => x.Id == employeeId);
+            return await context.Employee.Include(nameof(Gender)).Include(nameof(Department)).Include(nameof(Address)).FirstOrDefaultAsync(x => x.Id == employeeId);
         }
 
         public async Task<List<Employee>> GetEmployeesAsync() 
         {
-            return await context.Employee.Include(nameof(Gender)).Include(nameof(Address)).ToListAsync();
+            return await context.Employee.Include(nameof(Gender)).Include(nameof(Department)).Include(nameof(Address)).ToListAsync();
         }
 
         public async Task<List<Gender>> GetGendersAsync()
@@ -41,6 +41,7 @@ namespace BurgissTechStackDemo.API.Repositories
                 existingEmployee.Email = request.Email;
                 existingEmployee.Mobile = request.Mobile;
                 existingEmployee.GenderId = request.GenderId;
+                existingEmployee.DepartmentId = request.DepartmentId;
                 existingEmployee.Address.PostalAddress = request.Address.PostalAddress;
                 existingEmployee.Address.PhysicalAddress = request.Address.PhysicalAddress;
                 await context.SaveChangesAsync();
@@ -83,6 +84,11 @@ namespace BurgissTechStackDemo.API.Repositories
             }
 
             return false;
+        }
+
+        public async Task<List<Department>> GetDepartmentAsync()
+        {
+            return await context.Department.ToListAsync();
         }
     }
 }

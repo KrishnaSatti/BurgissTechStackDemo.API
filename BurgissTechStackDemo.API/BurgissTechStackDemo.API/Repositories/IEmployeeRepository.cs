@@ -8,6 +8,7 @@ namespace BurgissTechStackDemo.API.Repositories
         Task<List<Employee>> GetEmployeesAsync();
         Task<Employee> GetEmployeeAsync(Guid employeeId);
         Task<List<Gender>> GetGendersAsync();
+        Task<List<Department>> GetDepartmentAsync();
         Task<bool> Exists(Guid employeeId);
         Task<Employee> UpdateEmployee(Guid employeeId, Employee request);
         Task<Employee> DeleteStudent(Guid employeeId);

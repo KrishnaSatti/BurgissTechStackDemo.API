@@ -11,6 +11,8 @@
         public string? ProfileImageUrl { get; set; }
         public Guid GenderId { get; set; }
         public Gender Gender { get; set; }
+        public Guid DepartmentId { get; set; }
+        public Department Department { get; set; }
         public Address Address { get; set; }
 
 

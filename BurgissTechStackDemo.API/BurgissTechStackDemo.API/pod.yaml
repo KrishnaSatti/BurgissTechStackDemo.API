@@ -1,0 +1,13 @@
+﻿apiVersion: v1
+kind: Pod
+metadata:
+  name: BurgissTechStackDemo.API
+  labels:
+  app: BurgissTechStackDemo.API
+  component: netcore-app
+spec:
+  containers:
+    - image: burgisstechstackdemoapi.azurecr.io/burgisstechstackdemoapi:latest
+      name: webpage
+      ports:
+        - containerPort: 80

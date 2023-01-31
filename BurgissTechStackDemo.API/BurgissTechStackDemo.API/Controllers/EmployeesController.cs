@@ -80,43 +80,5 @@ namespace BurgissTechStackDemo.API.Controllers
             var employee = await employeeRepository.AddEmployee(mapper.Map<DataModels.Employee>(request));
             return CreatedAtAction(nameof(GetEmployeeAsync), new {employeeId = employee.Id}, mapper.Map<Employee>(employee));
         }
-
-        [HttpPost]
-        [Route("[controller]/{employeeId:guid}/upload-image")]
-        public async Task<IActionResult> UploadImage([FromRoute] Guid employeeId, IFormFile profileImage)
-        {
-            var validExtensions = new List<string>
-            {
-               ".jpeg",
-               ".png",
-               ".gif",
-               ".jpg"
-            };
-
-            if (profileImage != null && profileImage.Length > 0)
-            {
-                var extension = Path.GetExtension(profileImage.FileName);
-                if (validExtensions.Contains(extension))
-                {
-                    if (await employeeRepository.Exists(employeeId))
-                    {
-                        var fileName = Guid.NewGuid() + Path.GetExtension(profileImage.FileName);
-
-                        var fileImagePath = await imageRepository.Upload(profileImage, fileName);
-
-                        if (await employeeRepository.UpdateProfileImage(employeeId, fileImagePath))
-                        {
-                            return Ok(fileImagePath);
-                        }
-
-                        return StatusCode(StatusCodes.Status500InternalServerError, "Error uploading image");
-                    }
-                }
-
-                return BadRequest("This is not a valid Image format");
-            }
-
-            return NotFound();
-        }
     }
 }
